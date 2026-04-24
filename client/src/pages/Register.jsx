@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Register = () => {
+  const nav = useNavigate();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -20,6 +21,7 @@ const Register = () => {
         form,
       );
       alert(result.data);
+      nav("/");
     } catch (error) {
       alert("Registration failed");
     }
