@@ -20,8 +20,8 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/api/books/**")
-                        .permitAll()
+                        .requestMatchers("/api/auth/**", "/api/books/**").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated()
                 );
