@@ -1,0 +1,12 @@
+package com.project.dtos;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UpdateQuantityRequest {
+    private Integer quantity;
+}

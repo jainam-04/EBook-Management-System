@@ -4,6 +4,10 @@ import {Link} from "react-router-dom";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
+  // const [cart, setCart] = useState({
+  //   bookId: "",
+  //   quantity: "",
+  // });
 
   useEffect(() => {
     loadBooks();
@@ -17,6 +21,28 @@ const Books = () => {
     });
     setBooks(result.data);
   };
+
+  const addToCart = async (bookId) => {
+    try {
+      await axios.post(
+        "http://localhost:8080/api/cart/add",
+        {
+          bookId: bookId,
+          quantity: 1,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            email: localStorage.getItem("email"),
+          },
+        },
+      );
+      alert("Book added to cart");
+    } catch (error) {
+      alert("Failed to add cart");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="bg-white shadow px-8 py-4 flex justify-between items-center sticky top-0 z-50">
@@ -30,9 +56,12 @@ const Books = () => {
           className="border w-96 p-2 rounded-lg"
         />
 
-        <button className="bg-yellow-400 px-5 py-2 rounded-lg font-semibold hover:bg-yellow-500">
+        <Link
+          to="/cart"
+          className="bg-yellow-400 px-5 py-2 rounded-lg font-semibold hover:bg-yellow-500"
+        >
           Cart
-        </button>
+        </Link>
       </div>
 
       <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-center py-10">
@@ -71,7 +100,10 @@ const Books = () => {
                 <div className="flex items-center justify-between mt-4">
                   <p className="text-2xl font-bold text-gray-800">₹{b.price}</p>
 
-                  <button className="bg-yellow-400 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-yellow-500">
+                  <button
+                    onClick={() => addToCart(b.id)}
+                    className="bg-yellow-400 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-yellow-500"
+                  >
                     Add to Cart
                   </button>
                 </div>
