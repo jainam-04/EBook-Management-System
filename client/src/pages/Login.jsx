@@ -19,8 +19,14 @@ const Login = () => {
         form,
       );
       localStorage.setItem("token", result.data.token);
+      localStorage.setItem("role", result.data.role);
+      localStorage.setItem("email", result.data.email);
       alert("Login successful");
-      nav("/dashboard");
+      if (result.data.role === "ADMIN") {
+        nav("/admin");
+      } else {
+        nav("/dashboard");
+      }
     } catch (error) {
       alert("Login failed");
     }

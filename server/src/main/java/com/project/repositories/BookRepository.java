@@ -11,4 +11,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByCategoryIgnoreCase(String category);
     List<Book> findByStatusIgnoreCase(String status);
     List<Book> findTop8ByOrderByCreatedAtDesc();
+    List<Book> findBySellerEmail(String email);
 }

@@ -11,13 +11,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin/books")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AdminBookController {
     private final BookService service;
 
     @PostMapping("/add")
     public String addBook(@RequestBody BookRequest request){
         return service.addBook(request);
+    }
+
+    @GetMapping("/{id}")
+    public BookResponse getBookById(@PathVariable Long id){
+        return service.getBookById(id);
     }
 
     @GetMapping

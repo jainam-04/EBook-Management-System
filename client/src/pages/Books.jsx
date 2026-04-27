@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -9,13 +10,19 @@ const Books = () => {
   }, []);
 
   const loadBooks = async () => {
-    const result = await axios.get("http://localhost:8080/api/books");
+    const result = await axios.get("http://localhost:8080/api/user/books", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
     setBooks(result.data);
   };
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="bg-white shadow px-8 py-4 flex justify-between items-center sticky top-0 z-50">
-        <h1 className="text-3xl font-bold text-blue-600">Ebook Store</h1>
+        <h1 className="text-3xl font-bold text-blue-600">
+          <Link to="/dashboard">Ebook Store</Link>
+        </h1>
 
         <input
           type="text"

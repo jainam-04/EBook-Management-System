@@ -1,14 +1,12 @@
 import axios from "axios";
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
 
 const AddBook = () => {
-  const nav = useNavigate();
-
   const [form, setForm] = useState({
     title: "",
     author: "",
     price: "",
+    category: "NEW",
     imageUrl: "",
   });
 
@@ -19,25 +17,23 @@ const AddBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/user/books/sell", form, {
+      await axios.post("http://localhost:8080/api/admin/books/add", form, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
-          email: localStorage.getItem("email"),
         },
       });
       alert("Book added");
-      nav("/books");
     } catch (error) {
       alert("Failed");
     }
   };
   return (
-    <div className="min-h-screen flex justify-center items-center bg-slate-900">
+    <div className="p-10">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-xl w-96 space-y-4"
+        className="bg-white p-8 rounded-xl shadow max-w-lg mx-auto space-y-4"
       >
-        <h1 className="text-2xl font-bold text-center">Add Book</h1>
+        <h1 className="text-3xl font-bold text-center">Add Book</h1>
 
         <input
           name="title"
@@ -45,18 +41,31 @@ const AddBook = () => {
           className="w-full border p-3 rounded"
           onChange={handleChange}
         />
+
         <input
           name="author"
           placeholder="Author"
           className="w-full border p-3 rounded"
           onChange={handleChange}
         />
+
         <input
           name="price"
           placeholder="Price"
           className="w-full border p-3 rounded"
           onChange={handleChange}
         />
+
+        <select
+          name="category"
+          className="w-full border p-3 rounded"
+          onChange={handleChange}
+        >
+          <option>NEW</option>
+          <option>RECENT</option>
+          <option>TRENDING</option>
+        </select>
+
         <input
           name="imageUrl"
           placeholder="Image URL"

@@ -39,6 +39,6 @@ public class AuthService {
             throw new RuntimeException("Invalid credentials");
         }
         String token = service.generateToken(user.getEmail());
-        return new AuthResponse(token);
+        return new AuthResponse(token, user.getRole(), user.getEmail());
     }
 }
